@@ -10,6 +10,8 @@
 #include <thread>
 #include <stdio.h>
 #include <stdarg.h>
+#include <condition_variable>
+#include <mutex>
 #include "Buffer.h"
 #include "Singleton.h"
 #include "LoadIniFile.h"
@@ -63,6 +65,9 @@ private:
 	std::string logFile_;
 	std::string logPath_;
 	FILE*		logFileHandle_;
+
+	std::mutex 	mtx_;
+	std::condition_variable cv_;
 };
 
 #endif /* LOGTHREAD_H_ */

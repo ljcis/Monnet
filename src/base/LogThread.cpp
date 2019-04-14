@@ -14,6 +14,7 @@
 #include <pwd.h>
 #include <functional>
 #include <iostream>
+#include <chrono>
 
 const std::string  LogThread::sLevel[] = {"FATAL","ERROR", "WARN", "INFO", "DEBUG"};
 
@@ -35,6 +36,7 @@ LogThread::~LogThread() {
 
 void LogThread::release() {
 	isExit_ = true;
+	cv_.notify_all();
 	logThread_.join();
 
 	if(logFileHandle_){
@@ -46,7 +48,12 @@ void LogThread::release() {
 void LogThread::loop() {
 	while(!isExit_){
 		flush();
-		::usleep(intervalMs_ * 1000); // TODO use condition variable
+		using namespace std::chrono_literals;
+		std::unique_lock<std::mutex> lck(mtx_);
+		if(cv_.wait_for(lck, intervalMs_*1ms, []{ return true;})){
+			break;
+		}
+//		::usleep(intervalMs_ * 1000); // TODO use condition variable
 	}
 	flush();
 }

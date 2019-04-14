@@ -14,7 +14,8 @@
 class Buffer {
 	static const int kBufferSize;
 public:
-	Buffer():content_(kBufferSize),
+	Buffer():capacity_(kBufferSize),
+			content_(capacity_),
 			readIndex_(0),
 			writeIndex_(0)
 	{
@@ -22,12 +23,12 @@ public:
 	}
 	virtual ~Buffer();
 	void display();
-	size_t	capacity() const{ return kBufferSize;}
+	size_t	capacity() const{ return capacity_;}
 	size_t	size() const{
 		if(writeIndex_ >= readIndex_){
 			return writeIndex_ - readIndex_;
 		}else
-			return writeIndex_+ kBufferSize  - readIndex_;
+			return writeIndex_+ capacity_  - readIndex_;
 	}
 	size_t  beginRead() const{ return readIndex_;}
 	size_t  beginWrite() const{ return writeIndex_;}
@@ -37,15 +38,18 @@ public:
 		{
 			return readIndex_ - writeIndex_;
 		}else
-			return readIndex_ + kBufferSize - writeIndex_;
+			return readIndex_ + capacity_ - writeIndex_;
 	}
 	void fill(const char* str, size_t len);
 	size_t pop(char* str, size_t len);
 	void clear(){ readIndex_ = 0; writeIndex_ = 0; }
 	bool full() const{ return writeable() == 0;}
 	bool empty() const{ return readIndex_ == writeIndex_;}
-
+	// TODO low water mark high water mark
 private:
+	void extend();
+
+	size_t				capacity_;
 	std::vector<char>	content_;
 	volatile	size_t	readIndex_;
 	volatile	size_t	writeIndex_;

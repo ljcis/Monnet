@@ -12,6 +12,7 @@
 #include <stdarg.h>
 #include "Buffer.h"
 #include "Singleton.h"
+#include "LoadIniFile.h"
 
 class LogThread;
 enum log_level
@@ -48,8 +49,7 @@ private:
 	void loop();
 	void flush();
 	// TODO reload log level from config file;
-	// TODO reset interval
-	void reset() { loglevel_ = 2; }
+	void reset() { loglevel_ = LoadIniFile::loadLogLevel(); }
 
 	static std::string GetTimeStr();
 	static std::string GetProcessName();

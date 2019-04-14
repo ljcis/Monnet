@@ -46,8 +46,9 @@ void LogThread::release() {
 void LogThread::loop() {
 	while(!isExit_){
 		flush();
-		::usleep(intervalMs_ * 1000);
+		::usleep(intervalMs_ * 1000); // TODO use condition variable
 	}
+	flush();
 }
 
 void LogThread::flush() {
@@ -56,6 +57,8 @@ void LogThread::flush() {
 	if(buf_.pop(buf, len) > 0){
 		fwrite(buf, sizeof(char), len, logFileHandle_);
 	}
+
+	reset();
 }
 
 std::string LogThread::GetTimeStr()

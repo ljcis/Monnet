@@ -63,6 +63,7 @@ void LogThread::flush() {
 	char buf[len] = {0};
 	if(buf_.pop(buf, len) > 0){
 		fwrite(buf, sizeof(char), len, logFileHandle_);
+		fflush(logFileHandle_);
 	}
 
 	reset();

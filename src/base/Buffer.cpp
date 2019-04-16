@@ -54,4 +54,5 @@ void Buffer::extend() {
 	std::swap(temp, content_);
 	readIndex_ = 0;
 	writeIndex_ = tsize;
+	capacity_  = capacity;
 }

@@ -7,9 +7,9 @@
 
 #include "SocketFd.h"
 
-SocketFd::SocketFd() {
+SocketFd::SocketFd(int fd):fd_(fd) {
 	// TODO Auto-generated constructor stub
-
+	SimpleFd::enableRead();
 }
 
 SocketFd::~SocketFd() {

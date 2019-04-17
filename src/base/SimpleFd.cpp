@@ -7,7 +7,10 @@
 
 #include "SimpleFd.h"
 
-SimpleFd::SimpleFd() {
+SimpleFd::SimpleFd() :
+	events_(0),
+	revents_(0)
+{
 	// TODO Auto-generated constructor stub
 
 }

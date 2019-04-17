@@ -8,15 +8,20 @@
 #ifndef POLLER_H_
 #define POLLER_H_
 #include <unordered_map>
+#include <memory>
+#include <poll.h>
 
-using FdPtr = std::shared_ptr<SimpleFd>;
+struct SimpleFd;
+using FdList = std::vector<struct pollfd>;
 class Poller {
 public:
 	Poller();
 	virtual ~Poller();
 	void poll();
+	void addNewFd(SimpleFd* fdPtr);
 private:
-	std::unordered_map<int, FdPtr > fdList_;
+	std::unordered_map<int, SimpleFd* > fdList_; // <fd, FdPtr>
+	FdList		fds_;
 };
 
 #endif /* POLLER_H_ */

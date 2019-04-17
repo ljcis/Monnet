@@ -11,18 +11,16 @@
 #include <memory>
 #include <poll.h>
 
-//class Poller;
-class SimpleFd {
+class Poller;
+class SimpleFd{
 public:
 	SimpleFd();
 	virtual ~SimpleFd();
-	virtual void sendMsg();
-	virtual void onNewMsg();
-	int fd() const { return fd_; }
-	int id() const { return id_; }
-	virtual void setFd() = 0;
-	void addToPoller();
-	void removeFromPoller();
+	virtual void sendMsg() = 0;
+	virtual void onNewMsg() = 0;
+	virtual int fd() const = 0;
+	virtual int id() const = 0;
+	virtual void setFd(int fd) = 0;
 	void enableRead() { events_ |= (POLLIN | POLLPRI); }
 	void enableWrite() { events_ |= (POLLOUT); }
 	void disableRead() { events_ &= ~(POLLIN | POLLPRI); }
@@ -31,8 +29,6 @@ public:
 	bool isEnableWrite() const { return events_ & (POLLOUT); }
 
 private:
-	int fd_;
-	int id_;
 	int 		events_;		/* Types of events poller cares about.  */
 	int 		revents_;
 //	std::weak_ptr<Poller>	poller_;

@@ -10,6 +10,7 @@
 #include <vector>
 #include <stddef.h>
 #include <mutex>
+#include <assert.h>
 
 class Buffer {
 	static const int kBufferSize;
@@ -45,6 +46,20 @@ public:
 	void clear(){ readIndex_ = 0; writeIndex_ = 0; }
 	bool full() const{ return writeable() == 0;}
 	bool empty() const{ return readIndex_ == writeIndex_;}
+	uint32_t peekUint32() const {
+		assert(readable() >= sizeof(int32_t));
+		uint32_t be32 = 0;
+		::memcpy(&be32, &*content_.begin() + beginRead(), sizeof (uint32_t));
+		return ::ntohl(be32);
+	}
+
+	std::string popString(uint32_t len) {
+		assert(readable() >= len);
+		std::string msg(&*content_.begin() + beginRead(), len);
+		readIndex_ += len;
+		return msg;
+	}
+
 	// TODO low water mark high water mark
 private:
 	void extend();

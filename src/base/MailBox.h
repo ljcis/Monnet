@@ -10,10 +10,10 @@
 #include <queue>
 #include <mutex>
 
-struct ActorMail{
+struct Mail{
 	int		source;
 	int 	dest;
-	std::string mailContent;
+	Message mailContent;
 };
 class MailBox {
 public:
@@ -22,18 +22,18 @@ public:
 	bool empty() const { return mailqueue_.empty(); }
 	size_t size() const { return mailqueue_.size(); }
 
-	const ActorMail pop(){
+	const Mail pop(){
 		std::lock_guard<std::mutex> lock(lock_);
-		ActorMail mail = mailqueue_.front();
+		Mail mail = mailqueue_.front();
 		return mail;
 	}
-	void push(const ActorMail& mail){
+	void push(const Mail& mail){
 		std::lock_guard<std::mutex> lock(lock_);
 		mailqueue_.push(mail);
 	}
 
 private:
-	std::queue<ActorMail> mailqueue_;
+	std::queue<Mail> 	  mailqueue_;
 	int					  actorId_;
 	std::mutex			  lock_;
 };

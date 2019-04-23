@@ -13,7 +13,7 @@
 #include <arpa/inet.h> //for htonl ntohl
 #include <string.h>
 
-const int kHeaderLen = sizeof(uint32_t);
+constexpr int kHeaderLen = sizeof(uint32_t);
 
 class EncodeException{
 public:

@@ -131,3 +131,10 @@ struct SockMsg{
   crc // 结尾校验和
 }
 ```
+在具体的消息编码和解码的设计中，均使用string结构进行传递
+
+#### 功能结构
+#### Actor
+#### ActorHandler
+创建一个Actor时，将Actor注册到ActorHandler，ActorHandler是一个全局的map，存储所有的Actor的weak_ptr，发送消息时，通过id从ActorHandler中找到对应的actor，然后写入到mailbox。每个Actor关联到一个mailbox，Actor可以创建子actor，Actor只能给子actor发送消息，并接收回执。actor的生命周期由父控制。  
+

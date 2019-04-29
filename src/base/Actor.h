@@ -11,15 +11,11 @@
 #include <functional>
 #include <string>
 
+class MailBox;
 using MessageCallback = std::function<void(int, const std::string&, const std::string&)>;
 class Actor : std::enable_shared_from_this<Actor> {
 public:
-	Actor():mailBox_(new MailBox()),
-			cb_(NULL),
-			id_(0)
-	{
-		ActorHandler::getInstancePtr()->addToHandler(shared_from_this());
-	}
+	Actor();
 	virtual ~Actor();
 	void start();
 	void loop();

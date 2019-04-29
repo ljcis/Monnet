@@ -6,12 +6,15 @@
  */
 
 #include "Actor.h"
+#include "MailBox.h"
+#include "ActorHandler.h"
 
-Actor::Actor() {
-	// TODO Auto-generated constructor stub
-
+Actor::Actor():mailBox_(new MailBox()),
+			cb_(NULL),
+			id_(0)
+{
+	ActorHandler::getInstancePtr()->addToHandler(shared_from_this());
 }
-
 Actor::~Actor() {
 	// TODO Auto-generated destructor stub
 }

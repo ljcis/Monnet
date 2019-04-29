@@ -9,7 +9,7 @@
 #define SRC_BASE_MAILBOX_H_
 #include <queue>
 #include <mutex>
-
+#include "Message.h"
 struct Mail{
 	int		source;
 	int 	dest;

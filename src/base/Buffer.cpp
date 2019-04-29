@@ -6,7 +6,7 @@
  */
 
 #include "Buffer.h"
-#include <string.h>
+
 #include <stdint.h>
 #include <iostream>
 const int Buffer::kBufferSize = 4096;

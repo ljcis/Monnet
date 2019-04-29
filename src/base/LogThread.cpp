@@ -48,9 +48,9 @@ void LogThread::release() {
 void LogThread::loop() {
 	while(!isExit_){
 		flush();
-		using namespace std::chrono_literals;
+
 		std::unique_lock<std::mutex> lck(mtx_);
-		if(cv_.wait_for(lck, intervalMs_*1ms, []{ return true;})){
+		if(cv_.wait_for(lck, std::chrono::milliseconds(intervalMs_), []{ return true;})){
 			break;
 		}
 //		::usleep(intervalMs_ * 1000); // TODO use condition variable

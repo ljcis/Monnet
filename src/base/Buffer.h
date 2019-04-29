@@ -11,6 +11,8 @@
 #include <stddef.h>
 #include <mutex>
 #include <assert.h>
+#include <string.h>
+#include <arpa/inet.h>
 
 class Buffer {
 	static const int kBufferSize;

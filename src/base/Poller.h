@@ -10,18 +10,29 @@
 #include <unordered_map>
 #include <memory>
 #include <poll.h>
+#include <vector>
+#include <map>
 
-struct SimpleFd;
-using FdList = std::vector<struct pollfd>;
+class Event;
+struct pollfd;
+using EventList = std::vector<Event*>;
 class Poller {
+	using FdList = std::vector<struct pollfd>;
+	using EventMap = std::map<int, Event*>;
 public:
-	Poller();
+	explicit Poller(int timeoutMs):timeoutMs_(timeoutMs){
+
+	}
 	virtual ~Poller();
-	void poll();
-	void addNewFd(SimpleFd* fdPtr);
+
+	void Poll(EventList& activeEvents);
+	void AddToPoll(Event* ev);
+	void RemoveFromPoll(Event* ev);
+
 private:
-	std::unordered_map<int, SimpleFd* > fdList_; // <fd, FdPtr>
 	FdList		fds_;
+	int			timeoutMs_;
+	EventMap	eventMap_;
 };
 
 #endif /* POLLER_H_ */

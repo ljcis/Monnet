@@ -20,6 +20,7 @@ public:
 	void setIndex(int index){ index_ = index; }
 	bool isEnableRead() const { return events_& (POLLIN | POLLPRI); }
 	bool isEnableWrite() const { return events_ & (POLLOUT); }
+	bool isNoEvent() const { return events_ == 0; }
 	void enableRead() { events_ |= (POLLIN | POLLPRI); update();}
 	void enableWrite() { events_ |= (POLLOUT); update();}
 	void disableRead() { events_ &= ~(POLLIN | POLLPRI); update();}

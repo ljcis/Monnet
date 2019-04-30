@@ -17,7 +17,8 @@ OBJS	 		=	Actor.o	\
 					LoadIniFile.o	\
 					MailBox.o		\
 					Poller.o		\
-					SocketOps.o  
+					SocketOps.o  	\
+					Epoller.o 
 
 APPEND_LIB	=
 
@@ -56,7 +57,8 @@ Poller.o : ./base/Poller.cpp
 	$(CXX) $(CXXFLAGS) -o $(@) -c $(^) $(INCLUDEPATH)
 SocketOps.o : ./base/SocketOps.cpp
 	$(CXX) $(CXXFLAGS) -o $(@) -c $(^) $(INCLUDEPATH)
-
+Epoller.o : ./base/Epoller.cpp
+	$(CXX) $(CXXFLAGS) -o $(@) -c $(^) $(INCLUDEPATH)
 clean :
 	rm -rf *.o
 	rm -f $(OUTPUT_PATH)$(TARGET) 

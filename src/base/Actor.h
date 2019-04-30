@@ -12,7 +12,7 @@
 #include <string>
 
 class MailBox;
-using MessageCallback = std::function<void(int, const std::string&, const std::string&)>;
+using MessageCallback = std::function<void(int, const std::string&, const std::string&)>; // sourceFd, msgName, msgContent
 class Actor : std::enable_shared_from_this<Actor> {
 public:
 	Actor();

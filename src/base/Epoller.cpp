@@ -11,7 +11,8 @@
 #include <unistd.h>
 
 Epoller::Epoller(int timeoutMs):epollFd_(::epoll_create1(EPOLL_CLOEXEC)) ,
-								fds_(16),
+								setSize_(kDefaultEpollSize),
+								fds_(setSize_),
 								timeoutMs_(timeoutMs)
 {
 	// TODO Auto-generated constructor stub

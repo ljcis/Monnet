@@ -13,7 +13,7 @@
 
 class Event;
 using EventMap = std::map<int, Event*>;
-using FdList = std::vector<struct epoll_event>;
+using EpollEventList = std::vector<struct epoll_event>;
 using EventList = std::vector<Event*>;
 class Epoller {
 public:
@@ -24,11 +24,13 @@ public:
 	void RemoveFromPoll(Event* ev);
 
 private:
+	static const int kDefaultEpollSize = 16;
 
-	int 		epollFd_;
-	EventMap	eventMap_;
-	FdList		fds_;
-	int			timeoutMs_;
+	int 					epollFd_;
+	int						setSize_;
+	EventMap				eventMap_;
+	EpollEventList			fds_;
+	int						timeoutMs_;
 };
 
 #endif /* SRC_BASE_EPOLLER_H_ */

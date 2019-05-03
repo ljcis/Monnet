@@ -19,4 +19,6 @@ public:
 	Noncopyable& operator=(const Noncopyable&& non) = delete;
 };
 
+
+
 #endif /* COMMON_H_ */

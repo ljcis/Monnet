@@ -4,7 +4,7 @@ CC				= gcc
 LINKER			= g++
 CXXFLAGS 		= -Wall -std=c++0x
 CFLAGS			= -Wall 
-LFLAGS 			= -lpthread -lrt -luuid
+LFLAGS 			= -lpthread -lrt -luuid -lz
 INCLUDEPATH 	=  	-I./base/
 
 OBJS	 		=	Actor.o	\
@@ -18,7 +18,10 @@ OBJS	 		=	Actor.o	\
 					MailBox.o		\
 					Poller.o		\
 					SocketOps.o  	\
-					Epoller.o 
+					Epoller.o 		\
+					Connection.o	\
+					Acceptor.o		\
+					TcpServer.o
 
 APPEND_LIB	=
 
@@ -59,6 +62,13 @@ SocketOps.o : ./base/SocketOps.cpp
 	$(CXX) $(CXXFLAGS) -o $(@) -c $(^) $(INCLUDEPATH)
 Epoller.o : ./base/Epoller.cpp
 	$(CXX) $(CXXFLAGS) -o $(@) -c $(^) $(INCLUDEPATH)
+TcpServer.o : ./base/TcpServer.cpp
+	$(CXX) $(CXXFLAGS) -o $(@) -c $(^) $(INCLUDEPATH)
+Acceptor.o : ./base/Acceptor.cpp
+	$(CXX) $(CXXFLAGS) -o $(@) -c $(^) $(INCLUDEPATH)
+Connection.o : ./base/Connection.cpp
+	$(CXX) $(CXXFLAGS) -o $(@) -c $(^) $(INCLUDEPATH)
+	
 clean :
 	rm -rf *.o
 	rm -f $(OUTPUT_PATH)$(TARGET) 

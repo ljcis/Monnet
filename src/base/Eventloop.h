@@ -32,7 +32,7 @@ private:
 	std::unique_ptr<Poller>	poller_;
 	bool					exitFlag_;
 
-	std::thread::id				tid_;
+	std::thread::id			tid_;
 };
 
 #endif /* SRC_BASE_EVENTLOOP_H_ */

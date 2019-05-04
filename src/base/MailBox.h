@@ -32,6 +32,7 @@ public:
 		mailqueue_.push(mail);
 	}
 
+	static void sendMsg(const std::string& name, const Mail& msg);
 private:
 	std::queue<Mail> 	  mailqueue_;
 	int					  actorId_;

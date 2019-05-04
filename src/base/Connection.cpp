@@ -36,9 +36,14 @@ void Connection::onNewMessage(){
 		readBuf_->fill(buf, n);
 		uint32_t len = readBuf_->peekUint32();
 		if(readBuf_->readable() >= len){
-			std::string msg = readBuf_->popString(len);
-			Message m = decode(msg);
+			std::string strmsg = readBuf_->popString(len);
+			try{
+			Message m = decode(strmsg);
 			// send to IO Actor
+			}catch (EncodeException& e){
+				// LOG
+			}
+
 		}
 	}
 	else if(n == 0){

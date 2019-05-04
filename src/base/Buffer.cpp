@@ -18,7 +18,7 @@ Buffer::~Buffer() {
 void Buffer::fill(const char* str, size_t len) {
 	std::lock_guard<std::mutex> lock(lock_);
 
-	if(writeable() < len){
+	while(writeable() < len){
 		extend();
 	}
 	for(size_t i = 0; i < len; i++){
@@ -45,7 +45,7 @@ size_t Buffer::pop(char* str, size_t len) {
 
 void Buffer::extend() {
 	std::vector<char> temp;
-	size_t capacity = capacity_ << 1;
+	size_t capacity = capacity_  << 1;
 	size_t tsize = size();
 	temp.resize(capacity);
 	for(size_t i = 0; i < tsize; i++){

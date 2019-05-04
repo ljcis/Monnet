@@ -19,3 +19,6 @@ Actor::~Actor() {
 	// TODO Auto-generated destructor stub
 }
 
+void Actor::recvMsg(const Mail& msg){
+	mailBox_->push(msg);
+}

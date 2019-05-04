@@ -19,10 +19,6 @@ tid_(std::this_thread::get_id())
 }
 Eventloop::~Eventloop() {
 	// TODO Auto-generated destructor stub
-//	if(poller_ != nullptr){
-//		delete poller_;
-//		poller_ = nullptr;
-//	}
 }
 
 void Eventloop::addNewEvent(Event* ev) {

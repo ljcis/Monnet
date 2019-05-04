@@ -14,27 +14,29 @@
 #include "Singleton.h"
 
 class Actor;
-using ActorMap = std::vector<std::weak_ptr<Actor>>;
-
+using ActorList = std::vector<std::weak_ptr<Actor>>;
+using ActorMap = std::map<std::string, ActorList>;
 class ActorHandler:public Singleton<ActorHandler> {
 public:
 	ActorHandler();
 	virtual ~ActorHandler();
 	void addToHandler(std::shared_ptr<Actor> actor);
 
-	std::shared_ptr<Actor> getActorById(int id){
-		auto wp = actorMap_[id];
+	std::shared_ptr<Actor> getActorbyName(const std::string& name){
+		auto list = actorMap_[name];
+
+		auto wp = list[0]; // TODO hash
 		if(wp.expired()){
 			return wp.lock();
 		}else{
-			deleteFromHandler(id);
+			deleteFromHandler(name, 0);
 		}
 
 		return nullptr;
 	}
 
 private:
-	void deleteFromHandler(int id);
+	void deleteFromHandler(const std::string& name, int id);
 
 	ActorMap	actorMap_;
 };
